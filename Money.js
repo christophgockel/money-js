@@ -28,24 +28,23 @@ function Money(value) {
   var amount = value;
   
   this.add = function(value) {
-    var scaledValue = (value * scalingFactor());
+    var scaledValue = value * scalingFactor();
     var prec = Math.min(precision(amount), precision(scaledValue));
     
     amount = roundTo(parseInt(amount) + parseInt(scaledValue), prec);
   };
 
   this.subtract = function(value) {
-    var scaledValue = (value * scalingFactor());
+    var scaledValue = value * scalingFactor();
     var prec = Math.min(precision(amount), precision(scaledValue));
     
     amount = roundTo(amount - scaledValue, prec);
   };
     
   this.multiply = function(value) {
-    var scaledValue = value;// * scalingFactor();
-    var prec = Math.min(precision(amount), precision(scaledValue));
-    var test = (amount * scaledValue);// / scalingFactor()) | 0;
-    amount = roundTo(test, prec);
+    var prec = Math.min(precision(amount), precision(value));
+    
+    amount = roundTo(amount * value, prec);
   };
   
   this.divide = function(value) {
@@ -55,7 +54,7 @@ function Money(value) {
   };
 
   this.toDouble = function(decimalPlaces) {
-      decimalPlaces = decimalPlaces || 2;
+    decimalPlaces = decimalPlaces || 2;
     var normalizedValue = amount / scalingFactor();
     
     return 1 * normalizedValue.toFixed(decimalPlaces);
@@ -68,7 +67,7 @@ function Money(value) {
   };
   
   this.allocate = function(ratios) {
-    var remainder = this.toDouble();//amount;
+    var remainder = this.toDouble();
     var results = new Array(ratios.length);
     var total = 0;
     
